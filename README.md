@@ -1,5 +1,10 @@
 # wanzami-admin.frontend
 wanzami admin frontend with vue js
+
+=======
+
+npm run to view commands
+
 =======
 # Vuetify (Default)
 
