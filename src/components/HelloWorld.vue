@@ -40,6 +40,9 @@
               <div class="text-subtitle-1">
                 Replace this page by removing <v-kbd>{{ `<HelloWorld />` }}</v-kbd> in <v-kbd>pages/index.vue</v-kbd>.
               </div>
+              <h1 class="text-3xl font-bold underline">
+                Hello world!
+              </h1>
             </template>
 
             <v-overlay

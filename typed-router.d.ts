@@ -19,5 +19,21 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
+    '/Clean': RouteRecordInfo<'/Clean', '/Clean', Record<never, never>, Record<never, never>>,
+    '/ConfirmEmail': RouteRecordInfo<'/ConfirmEmail', '/ConfirmEmail', Record<never, never>, Record<never, never>>,
+    '/Dashboard': RouteRecordInfo<'/Dashboard', '/Dashboard', Record<never, never>, Record<never, never>>,
+    '/EditProfile': RouteRecordInfo<'/EditProfile', '/EditProfile', Record<never, never>, Record<never, never>>,
+    '/ElectionFederal': RouteRecordInfo<'/ElectionFederal', '/ElectionFederal', Record<never, never>, Record<never, never>>,
+    '/ElectionLocal': RouteRecordInfo<'/ElectionLocal', '/ElectionLocal', Record<never, never>, Record<never, never>>,
+    '/Elections': RouteRecordInfo<'/Elections', '/Elections', Record<never, never>, Record<never, never>>,
+    '/ElectionState': RouteRecordInfo<'/ElectionState', '/ElectionState', Record<never, never>, Record<never, never>>,
+    '/Login': RouteRecordInfo<'/Login', '/Login', Record<never, never>, Record<never, never>>,
+    '/LoginVoters': RouteRecordInfo<'/LoginVoters', '/LoginVoters', Record<never, never>, Record<never, never>>,
+    '/ManageVotersCrud': RouteRecordInfo<'/ManageVotersCrud', '/ManageVotersCrud', Record<never, never>, Record<never, never>>,
+    '/Profile': RouteRecordInfo<'/Profile', '/Profile', Record<never, never>, Record<never, never>>,
+    '/RegisterVoters': RouteRecordInfo<'/RegisterVoters', '/RegisterVoters', Record<never, never>, Record<never, never>>,
+    '/Reports': RouteRecordInfo<'/Reports', '/Reports', Record<never, never>, Record<never, never>>,
+    '/Signup': RouteRecordInfo<'/Signup', '/Signup', Record<never, never>, Record<never, never>>,
+    '/UploadDocument': RouteRecordInfo<'/UploadDocument', '/UploadDocument', Record<never, never>, Record<never, never>>,
   }
 }
