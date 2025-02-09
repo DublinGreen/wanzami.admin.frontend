@@ -1,46 +1,56 @@
 <template>
   <section id="page">
     <v-row justify="center">
-      <section class="dt-login--container" style="background-color: #FAF9F6; border-radius: 10px; padding: 1%; opacity: 0.8; width: 500px;">
+      <section class="dt-login--container loginBox">
         <section class="dt-login__content-wrapper">
           <section class="dt-login__bg-section">
             <section class="dt-login__bg-content">
-              <img style="margin: auto; margin-top: 2%;" class="h-auto max-w-lg rounded-lg" src="../../assets/logo_small.png" alt="{{appName}}" /><br>
-              <p class="f-16 text-center text-gray-500">Login with a {{appName}} Admin account.</p><br>
+              <img 
+                class="h-auto max-w-lg rounded-lg loginImg" 
+                src="../../assets/logo_small.png" 
+                alt="{{appName}}" 
+              >
+              <p class="f-16 text-center text-gray-500">
+                Login with a 
+                {{appName}} 
+                Admin account.
+              </p><br>
             </section>
-
-            <section class="dt-login__logo"></section>
+            <section 
+              class="dt-login__logo"
+            />
           </section>
 
           <section class="dt-login__content">
             <section class="dt-login__content-inner">
               <form>
                 <v-text-field
-                  class="f-16 text-gray-900"
                   v-model="state.email"
                   :error-messages="v$.email.$errors.map(e => e.$message)"
+                  class="f-16 text-gray-900"
                   label="E-mail"
                   required
                   @blur="v$.email.$touch"
                   @input="v$.email.$touch"
-                ></v-text-field>
+                />
 
                 <v-text-field
-                  class="f-16 text-gray-900"
                   v-model="state.password"
                   :error-messages="v$.password.$errors.map(e => e.$message)"
+                  class="f-16 text-gray-900"
                   label="Password"
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   :type="showPassword ? 'text' : 'password'"
-                  @click:append="showPassword = !showPassword"
                   required
+                  @click:append="showPassword = !showPassword"
                   @blur="v$.password.$touch"
                   @input="v$.password.$touch"
-                ></v-text-field>
+                />
 
                 <br>
-                <v-btn @click="clear"
+                <v-btn 
                   class="me-4 float-right"
+                  @click="clear"
                 >
                   clear
                 </v-btn>
@@ -55,7 +65,11 @@
                 <section 
                   v-if="loading" 
                   class="f-16 text-center text-gray-500 me-4 float-right">
-                  <img style="width: 40px;" src="../../assets/orange_circles.gif" alt="loading">
+                  <img 
+                    class="loadingGif" 
+                    src="../../assets/orange_circles.gif" 
+                    alt="loading"
+                  >
                 </section>
               </form>
             </section>
@@ -69,13 +83,13 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import { reactive } from 'vue'
+  import store from "@/store";
+  import gql from 'graphql-tag';
   import { useVuelidate } from '@vuelidate/core'
   import { email, required } from '@vuelidate/validators'
-  import { useQuery } from '@vue/apollo-composable';
   import { useMutation } from '@vue/apollo-composable';
-  import gql from 'graphql-tag';
-  import store from "../store";
   import { useRouter } from 'vue-router';
+  import {LOGIN_USER} from "@/mutation/LOGIN_USER";
   import {onMounted } from 'vue';
 
   const router = useRouter();
@@ -88,40 +102,14 @@
       }
   });
 
-  const GET_USERS = gql`
-    query FindAllUsers {
-    findAllUsers {
-        id
-        status
-        username
-        email
-        telephone
-        password
-        role
-    }
-}`;
-
-  useQuery(GET_USERS);
-
   const initialState = {
     password: '',
     email: '',
   }
-
-  const LOGIN_USER = gql`
-  mutation Login($email: String!, $password: String!) {
-    login(email: $email, password: $password)
-}`;
-
-const { mutate: loginUser } = useMutation(LOGIN_USER);
-
-
   const appName = store.state.appName;
   const showPassword = ref(false);
   const loading = ref(false);
-  const redirect = ref(false); // set true, if page should redirect to Dashboard
-
-
+  const redirect = ref(true); // set true, if page should redirect to Dashboard
   const state = reactive({
     ...initialState,
   })
@@ -132,6 +120,8 @@ const { mutate: loginUser } = useMutation(LOGIN_USER);
   }
 
   const v$ = useVuelidate(rules, state)
+
+  const { mutate: loginUser } = useMutation(LOGIN_USER);
 
   function clear () {
     v$.value.$reset()
@@ -145,8 +135,6 @@ const { mutate: loginUser } = useMutation(LOGIN_USER);
   async function submit () {
     loading.value = true;
     try {
-      // const response = await loginUser();
-
       const response = await loginUser({
         email: state.email,
         password: state.password,
@@ -154,9 +142,7 @@ const { mutate: loginUser } = useMutation(LOGIN_USER);
 
       if(response?.data){
         clear();
-        let token = response.data.login;      
-        store.dispatch('setToken', token);
-        // store.dispatch('clearToken'); // Clear token
+        store.dispatch('setToken', response.data.login);
       }
 
       setTimeout(() => {
@@ -173,6 +159,18 @@ const { mutate: loginUser } = useMutation(LOGIN_USER);
 </script>
 
 <style scoped>
+
+.loadingGif{
+  width: 40px;
+}
+
+.loginImg{
+  margin: auto; margin-top: 2%;
+}
+
+.loginBox{
+  background-color: #FAF9F6; border-radius: 10px; padding: 1%; opacity: 0.8; width: 500px;
+}
 
 .mainButton{
   background-color: #e05307;
