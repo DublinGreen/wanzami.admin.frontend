@@ -57,9 +57,6 @@
                   class="f-16 text-center text-gray-500 me-4 float-right">
                   <img style="width: 40px;" src="../../assets/orange_circles.gif" alt="loading">
                 </section>
-                <!-- 
-                <div v-else-if="error">{{ error.message }}</div>
-                <div v-else>{{ result?.greeting }}</div> -->
               </form>
             </section>
           </section>
@@ -77,6 +74,19 @@
   import { useQuery } from '@vue/apollo-composable';
   import { useMutation } from '@vue/apollo-composable';
   import gql from 'graphql-tag';
+  import store from "../store";
+  import { useRouter } from 'vue-router';
+  import {onMounted } from 'vue';
+
+  const router = useRouter();
+
+  onMounted(async () => {
+      if(localStorage.getItem('token')){
+        if(redirect.value){
+          router.push('Dashboard');
+        }
+      }
+  });
 
   const GET_USERS = gql`
     query FindAllUsers {
@@ -106,9 +116,10 @@
 const { mutate: loginUser } = useMutation(LOGIN_USER);
 
 
-  const appName = ref('Wanzami');
+  const appName = store.state.appName;
   const showPassword = ref(false);
   const loading = ref(false);
+  const redirect = ref(false); // set true, if page should redirect to Dashboard
 
 
   const state = reactive({
@@ -133,19 +144,31 @@ const { mutate: loginUser } = useMutation(LOGIN_USER);
 
   async function submit () {
     loading.value = true;
-  try {
-    // const response = await loginUser();
+    try {
+      // const response = await loginUser();
 
-    const response = await loginUser({
-      email: state.email,
-      password: state.password,
-    });
-    console.log('Login Success:', response);
-  } catch (error) {
-    console.error('Login Failed:', error);
-  } finally {
-    loading.value = false;
-  }
+      const response = await loginUser({
+        email: state.email,
+        password: state.password,
+      });
+
+      if(response?.data){
+        clear();
+        let token = response.data.login;      
+        store.dispatch('setToken', token);
+        // store.dispatch('clearToken'); // Clear token
+      }
+
+      setTimeout(() => {
+        if(redirect.value){
+          router.push('Dashboard');
+        }
+      }, store.state.redirectTimeout);
+    } catch (error) {
+      console.error('Login Failed:', error);
+    } finally {
+      loading.value = false;
+    }
   }
 </script>
 

@@ -1,8 +1,9 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
+import store from "./store";
 
 // HTTP connection to the API
 const httpLink = createHttpLink({
-uri: 'http://localhost:9085/graphql',
+    uri: store.state.noAuthBackendUrl,
 })
 
 // Cache implementation
