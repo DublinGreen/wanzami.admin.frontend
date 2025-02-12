@@ -1,5 +1,5 @@
 <template>
-  <v-footer color="green" app>
+  <v-footer class="footerBox" app>
     <span class="white--text">{{ getCopyright }}</span>
   </v-footer>
 </template>
@@ -17,12 +17,18 @@ export default {
   watch: {},
   computed: mapState({
     getCopyright() {
-      return ` Copyright © ${store.state.commonStore.currentYear.getFullYear()} ${
-        store.state.commonStore.appName
+      return ` Copyright © ${store.state.currentYear.getFullYear()} ${
+        store.state.appName
       }, All rights reserved`;
     }
   })
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+.footerBox{
+  background-color: #e05307;
+}
+
+</style>

@@ -7,12 +7,31 @@ export default createStore({
     authBackendUrl   : "http://localhost:8081/graphql",
     redirectTimeout  : 2000,
     appName          : "Wanzami",
+    count            : 1500,
+    leftDrawer       : true,
+    currentYear      : new Date(),
+    copyright        : "",
+    leftDrawer       : true
   },
   getters: {
     token: (state) => state.token,
     redirectTimeout: (state) => state.redirectTimeout,
     noAuthBackendUrl: (state) => state.noAuthBackendUrl,
     authBackendUrl: (state) => state.authBackendUrl,
+    leftDrawer: state => {
+      return state.leftDrawer;
+    },
+    count: state => {
+      return state.count;
+    },
+    leftDrawer: state => {
+      return state.leftDrawer;
+    },
+  },
+  setter: {
+    leftDrawer: state => {
+      state.leftDrawer = !state.leftDrawer;
+    }
   },
   mutations: {
     SET_TOKEN(state, token) {
@@ -22,6 +41,9 @@ export default createStore({
     CLEAR_TOKEN(state) {
       state.token = null;
       localStorage.removeItem('token');
+    },
+    TOOGLE_LEFT_DRAWER(state) {
+      state.leftDrawer = !state.leftDrawer;
     }
   },
   actions: {
@@ -37,8 +59,13 @@ export default createStore({
     clearToken({ commit }) {
       commit('CLEAR_TOKEN');
     },
+    toogleLeftDrawer(state) {
+      state.leftDrawer = !state.leftDrawer;
+    }
 
   },
   modules: {
   }
-})
+}
+)
+

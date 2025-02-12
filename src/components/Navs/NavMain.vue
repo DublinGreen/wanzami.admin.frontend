@@ -1,17 +1,6 @@
 <template>
   <nav>
-    <v-navigation-drawer v-bind:value="leftDrawer" app>
-      <!-- <v-img
-        v-bind:alt="getAppName"
-        v-bind:title="getAppName"
-        class="shrink mt-1 hidden-sm-and-down"
-        contain
-        min-width="200"
-        style="margin-left: 25px;"
-        src="../../assets/corporate-setup-logo.png"
-        width="200"
-      />-->
-
+    <v-navigation-drawer v-if="toogleDrawer" app>
       <v-list dense active-class="border">
         <v-list-item class="leftNavs">
           <v-list-item-action>
@@ -21,21 +10,8 @@
             <router-link class="leftNavText" to="/Dashboard">Home</router-link>
           </v-list-item-content>
         </v-list-item>
-
-        <!-- <v-list-item class="leftNavs" v-show="isLogin">
-          <v-list-item-action>
-            <router-link to="/Profile">
-              <i class="fas fa-user-tie fa-4x iconlight"></i>
-            </router-link>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title class="leftNavText">
-              <router-link to="/Profile">Profile</router-link>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item> -->
-
-        <v-list-item class="leftNavs" v-show="isLogin">
+        <v-list-item class="leftNavs" 
+          v-show="">
           <v-list-item-action>
             <router-link to="/RegisterVoters">
               <i class="fa fa-user fa-4x iconlight"></i>
@@ -93,83 +69,99 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item class="leftNavs">
+        <v-list-item class="leftNavs" @click="logout">
           <v-list-item-action>
             <i class="fa fa-power-off fa-4x iconlight"></i>
           </v-list-item-action>
 
           <v-list-item-content>
-            <p id="leftNavLogout" @click="logout">Logout</p>
+            <p id="leftNavLogout">Logout</p>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="green" dark>
-      <v-app-bar-nav-icon @click.stop="toogleLeftDrawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>{{ getAppName }} ({{mobile}})</v-toolbar-title>
+    <v-app-bar app color="#e05307" dark>
+      <v-app-bar-nav-icon @click="toogleLeftDrawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>{{ appName }} Backend Application</v-toolbar-title>
     </v-app-bar>
   </nav>
 </template>
 
-<script>
-import store from "../../store";
-import { mapState } from "vuex";
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import { reactive } from 'vue'
+  import store from "@/store";
+  import gql from 'graphql-tag';
+  import { useVuelidate } from '@vuelidate/core'
+  import { email, required } from '@vuelidate/validators'
+  import { useMutation } from '@vue/apollo-composable';
+  import { useRouter } from 'vue-router';
+  import {LOGIN_USER} from "@/mutation/LOGIN_USER";
+  import {onMounted } from 'vue';
 
-export default {
-  name: "NavTop",
-  data: () => ({
-    isLogin: localStorage.getItem(store.state.setIsLoginLocalStorageKey),
-    mobile: localStorage.getItem(store.state.setMobileLocalStorageKey),
-    isLoginAsVoter: localStorage.getItem(
-      store.state.setIsLoginAsVoterLocalStorageKey
-    )
-    // isLogin: true
-  }),
-  created: function() {
-    if (this.isLogin == "false") {
-      this.isLogin = false;
-    }
+  const router = useRouter();
 
-    if (this.isLogin == "true") {
-      this.isLogin = true;
-    }
+  // onMounted(async () => {
+  //     if(localStorage.getItem('token')){
+  //       if(redirect.value){
+  //         router.push('Dashboard');
+  //       }
+  //     }
+  // });
 
-    if (this.isLoginAsVoter == "false") {
-      this.isLoginAsVoter = false;
-    }
+  const initialState = {
+    password: '',
+    email: '',
+    leftDrawer: true,
+  }
 
-    if (this.isLoginAsVoter == "true") {
-      this.isLoginAsVoter = true;
-    }
-  },
-  computed: mapState({
-    leftDrawer: state => state.leftNavDrawerStore.leftDrawer,
-    getLeftDrawer() {
-      return store.state.leftNavDrawerStore.leftDrawer;
-    },
-    getAppName() {
-      return store.state.commonStore.appName;
-    }
-  }),
-  methods: {
-    toogleLeftDrawer: function(event) {
-      console.log("ToogleLeftDrawer ", event);
-      store.commit("toogleLeftDrawer");
-    },
-    logout: function() {
-      localStorage.setItem(store.state.setIsLoginLocalStorageKey, false);
-      localStorage.setItem(store.state.setTokenLocalStorageKey, "");
-      localStorage.setItem(store.state.setEmailLocalStorageKey, "");
-      localStorage.setItem(store.state.setIsLoginAsVoterLocalStorageKey, false);
+  const appName = store.state.appName;
+  const loading = ref(false);
+  const toogleDrawer = ref<boolean>(true);
+  const isLogin = true;
+  const isLoginAsVoter = true;
+  const redirect = ref(true); // set true, if page should redirect to Dashboard
+  const state = reactive({
+    ...initialState,
+  })
 
-      this.$router.push("Login");
-      // this.$router.go(this.$router.currentRoute);
+  const LOGOUT_USER = gql`
+  mutation Logout($token: String!) {
+      logout(token: $token)
+  }`;
 
-      // this.$router.push("/#");
+  const { mutate: logoutUser } = useMutation(LOGOUT_USER);
+
+  async function logout () {
+    if (confirm("Are you sure you want to logout?")) {
+
+      try {
+        const response = await logoutUser({
+          token: localStorage.getItem("token")
+        });
+        console.log(response);
+
+      } catch (error) {
+        // loginWarning.value = true;
+        console.log(error);
+      } finally {
+        // loading.value = false;
+      }
+
+      localStorage.setItem("token", "");
+      if(redirect.value){
+          router.push('/');
+      }
     }
   }
-};
+
+  function toogleLeftDrawer () {
+      // alert(toogleDrawer.value);
+      toogleDrawer.value = !toogleDrawer.value;
+      store.dispatch('toogleLeftDrawer', !state.leftDrawer);
+  }
+
 </script>
 
 <style scoped>
@@ -179,7 +171,7 @@ nav {
 }
 
 .leftNavs {
-  background-color: #4caf50;
+  background-color: #e05307;
   color: #ffffff;
   margin-bottom: 10px;
 }
@@ -195,5 +187,9 @@ nav {
 
 .iconlight:hover {
   color: #ffff00;
+}
+
+.footerBox{
+  background-color: #e05307;
 }
 </style>

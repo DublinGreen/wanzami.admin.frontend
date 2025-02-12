@@ -23,6 +23,15 @@
 
           <section class="dt-login__content">
             <section class="dt-login__content-inner">
+              <v-alert
+                v-if="loginWarning"
+                outlined
+                type="warning"
+                prominent
+              >
+                Invalid email and password combination.
+              </v-alert>
+              <br>  
               <form>
                 <v-text-field
                   v-model="state.email"
@@ -81,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { computed, ref } from 'vue'
   import { reactive } from 'vue'
   import store from "@/store";
   import gql from 'graphql-tag';
@@ -105,10 +114,12 @@
   const initialState = {
     password: '',
     email: '',
-  }
+  };
+
   const appName = store.state.appName;
   const showPassword = ref(false);
-  const loading = ref(false);
+  const loginWarning = ref<boolean>(false);
+  const loading = ref<boolean>(false);
   const redirect = ref(true); // set true, if page should redirect to Dashboard
   const state = reactive({
     ...initialState,
@@ -130,6 +141,7 @@
       state[key] = value
     }
     loading.value = false;
+    loginWarning.value = false;
   }
 
   async function submit () {
@@ -151,7 +163,7 @@
         }
       }, store.state.redirectTimeout);
     } catch (error) {
-      console.error('Login Failed:', error);
+      loginWarning.value = true;
     } finally {
       loading.value = false;
     }
