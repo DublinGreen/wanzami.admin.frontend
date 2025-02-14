@@ -4,22 +4,23 @@
       <v-list dense active-class="border">
         <v-list-item class="leftNavs">
           <v-list-item-action>
-            <i class="fa fa-home fa-4x iconlight"></i>
+            <router-link to="/Dashboard">
+              <i class="fa fa-home fa-4x iconlight"></i>
+            </router-link>
           </v-list-item-action>
           <v-list-item-content>
-            <router-link class="leftNavText" to="/Dashboard">Home</router-link>
+            <router-link style="float: right; margin-top: -40px; margin-right: 100px;" class="leftNavText" to="/Dashboard">Home</router-link>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item class="leftNavs" 
-          v-show="">
+        <v-list-item class="leftNavs">
           <v-list-item-action>
-            <router-link to="/RegisterVoters">
+            <router-link to="/ManageUsers">
               <i class="fa fa-user fa-4x iconlight"></i>
             </router-link>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title class="leftNavText">
-              <router-link to="/RegisterVoters">
+              <router-link to="/ManageUsers">
                 Register
                 <br />Voter
               </router-link>
@@ -29,15 +30,14 @@
 
         <v-list-item class="leftNavs" v-show="isLogin">
           <v-list-item-action>
-            <router-link to="/ManageVotersCrud">
+            <router-link to="/ManageUsers">
               <i class="fa fa-users fa-4x iconlight"></i>
             </router-link>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title class="leftNavText">
-              <router-link to="/ManageVotersCrud">
-                All
-                <br />Voters
+              <router-link to="/ManageUsers">
+                Users
               </router-link>
             </v-list-item-title>
           </v-list-item-content>
@@ -93,22 +93,20 @@
   import { reactive } from 'vue'
   import store from "@/store";
   import gql from 'graphql-tag';
-  import { useVuelidate } from '@vuelidate/core'
-  import { email, required } from '@vuelidate/validators'
   import { useMutation } from '@vue/apollo-composable';
   import { useRouter } from 'vue-router';
-  import {LOGIN_USER} from "@/mutation/LOGIN_USER";
+  import {LOGOUT_USER} from "@/mutation/mutations";
   import {onMounted } from 'vue';
 
   const router = useRouter();
 
-  // onMounted(async () => {
-  //     if(localStorage.getItem('token')){
-  //       if(redirect.value){
-  //         router.push('Dashboard');
-  //       }
-  //     }
-  // });
+  onMounted(async () => {
+      if(localStorage.getItem('token') == ""){
+        if(redirect.value){
+          router.push('/');
+        }
+      }
+  });
 
   const initialState = {
     password: '',
@@ -117,7 +115,6 @@
   }
 
   const appName = store.state.appName;
-  const loading = ref(false);
   const toogleDrawer = ref<boolean>(true);
   const isLogin = true;
   const isLoginAsVoter = true;
@@ -125,11 +122,6 @@
   const state = reactive({
     ...initialState,
   })
-
-  const LOGOUT_USER = gql`
-  mutation Logout($token: String!) {
-      logout(token: $token)
-  }`;
 
   const { mutate: logoutUser } = useMutation(LOGOUT_USER);
 

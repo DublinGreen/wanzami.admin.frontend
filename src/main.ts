@@ -8,6 +8,7 @@
 import { registerPlugins } from '@/plugins'
 import { ApolloClients } from '@vue/apollo-composable';
 import apolloClient from './apolloClient';
+import queryClient from './queryClient';
 
 // Components
 import App from './App.vue'
@@ -24,4 +25,5 @@ app.provide(ApolloClients, {
 
 registerPlugins(app)
 
+app.use(queryClient);
 app.mount('#app')

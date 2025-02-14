@@ -11,7 +11,7 @@ export default createStore({
     leftDrawer       : true,
     currentYear      : new Date(),
     copyright        : "",
-    leftDrawer       : true
+    leftDrawer       : true,
   },
   getters: {
     token: (state) => state.token,

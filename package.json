@@ -13,6 +13,7 @@
   "dependencies": {
     "@apollo/client": "^3.12.11",
     "@mdi/font": "7.4.47",
+    "@tanstack/vue-query": "^5.66.0",
     "@vue/apollo-composable": "^4.2.1",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",

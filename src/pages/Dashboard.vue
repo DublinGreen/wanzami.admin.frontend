@@ -40,7 +40,7 @@
   import { useRouter } from 'vue-router';
   import {LOGIN_USER} from "@/mutation/LOGIN_USER";
   import {onMounted } from 'vue';
-
+  
   const router = useRouter();
 
   const initialState = {
@@ -50,7 +50,6 @@
   }
 
   const appName = store.state.appName;
-  const loading = ref(false);
   const isLogin = true;
   const leftDrawer = true;
   const isLoginAsVoter = true;

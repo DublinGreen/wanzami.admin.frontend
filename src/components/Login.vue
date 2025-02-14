@@ -98,7 +98,7 @@
   import { email, required } from '@vuelidate/validators'
   import { useMutation } from '@vue/apollo-composable';
   import { useRouter } from 'vue-router';
-  import {LOGIN_USER} from "@/mutation/LOGIN_USER";
+  import {LOGIN_USER} from "@/mutation/mutations";
   import {onMounted } from 'vue';
 
   const router = useRouter();
