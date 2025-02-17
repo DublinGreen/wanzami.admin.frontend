@@ -21,5 +21,4 @@ mutation CreateUser($username: String!, $email: String!, $password: String!, $te
       password
       role
   }
-}
-`;
+}`;

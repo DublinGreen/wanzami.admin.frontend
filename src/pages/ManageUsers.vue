@@ -116,7 +116,9 @@
 
   const v$ = useVuelidate(rules, state)
   
-  const { result, loading, error } = useQuery(GET_ALL_USERS);
+  const { result, loading, error } = useQuery(GET_ALL_USERS, {
+    clientId: "defaultAlt", // Ensure you're using the correct client
+  });
 
   // Reactive variables
   const search   = ref('');
@@ -149,27 +151,40 @@
   };
 
 // Add user mutation
-const { mutate: addUser, loading: loadingAdd } = useMutation(ADD_USER);
+const { mutate: addUser, loading: loadingAdd } = useMutation(ADD_USER, {
+  clientId: "defaultAlt", 
+});
 
 // Reactive state for new user
 const newUser = ref({
-  username: "",
-  email: "",
-  password: "",
-  telephone: "",
+  username: "nitas",
+  email: "nitas@gmail.com",
+  password: "Steeldubs0077!@#",
+  telephone: "07032090803",
   role: "Normal",
 });
 
 // Add user function
 const addNewUser = async () => {
   try {
-    await addUser({ variables: newUser.value });
+    const response = await addUser({
+      username: newUser.value.username,
+      email: newUser.value.email,
+      password: newUser.value.password,
+      telephone: newUser.value.telephone,
+      role: newUser.value.role,
+    });
+    console.log(response);
     newUser.value = { username: "", email: "", password: "", telephone: "", role: "User" };
     await refetch(); // Refresh table data
   } catch (err) {
     console.error("Error adding user:", err);
   }
 };
+
+const refetch = async () => {
+  // const { result, loading, error } = useQuery(GET_ALL_USERS);
+}
 </script>
 
 <style scoped>

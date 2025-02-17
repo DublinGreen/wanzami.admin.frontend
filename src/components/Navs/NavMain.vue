@@ -123,7 +123,10 @@
     ...initialState,
   })
 
-  const { mutate: logoutUser } = useMutation(LOGOUT_USER);
+  const { mutate: logoutUser } = useMutation(LOGOUT_USER, {
+    clientId: "defaultAlt", // Ensure you're using the correct client
+  });
+
 
   async function logout () {
     if (confirm("Are you sure you want to logout?")) {

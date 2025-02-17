@@ -92,6 +92,8 @@
 <script setup lang="ts">
   import { computed, ref } from 'vue'
   import { reactive } from 'vue'
+  import { ApolloClients } from '@vue/apollo-composable';
+  import apolloClient from '@/apollo';
   import store from "@/store";
   import gql from 'graphql-tag';
   import { useVuelidate } from '@vuelidate/core'
@@ -100,6 +102,9 @@
   import { useRouter } from 'vue-router';
   import {LOGIN_USER} from "@/mutation/mutations";
   import {onMounted } from 'vue';
+  import { inject } from 'vue';
+
+  const dataApolloClient = inject('apolloDataClient');
 
   const router = useRouter();
 
@@ -120,7 +125,7 @@
   const showPassword = ref(false);
   const loginWarning = ref<boolean>(false);
   const loading = ref<boolean>(false);
-  const redirect = ref(true); // set true, if page should redirect to Dashboard
+  const redirect = ref(false); // set true, if page should redirect to Dashboard
   const state = reactive({
     ...initialState,
   })
@@ -132,7 +137,7 @@
 
   const v$ = useVuelidate(rules, state)
 
-  const { mutate: loginUser } = useMutation(LOGIN_USER);
+  const { mutate: loginUser } = useMutation(LOGIN_USER, { "client": dataApolloClient });
 
   function clear () {
     v$.value.$reset()
