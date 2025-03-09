@@ -125,7 +125,7 @@
   const showPassword = ref(false);
   const loginWarning = ref<boolean>(false);
   const loading = ref<boolean>(false);
-  const redirect = ref(false); // set true, if page should redirect to Dashboard
+  const redirect = ref(true); // set true, if page should redirect to Dashboard
   const state = reactive({
     ...initialState,
   })

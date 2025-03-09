@@ -40,7 +40,8 @@
   import { useRouter } from 'vue-router';
   import {LOGIN_USER} from "@/mutation/LOGIN_USER";
   import {onMounted } from 'vue';
-  
+  import axios from 'axios';
+
   const router = useRouter();
 
   const initialState = {
@@ -64,6 +65,44 @@
   }
 
   const v$ = useVuelidate(rules, state)
+
+
+  const GRAPHQL_ENDPOINT = store.state.authBackendUrl;
+
+  async function fetchData() {
+
+    const token = localStorage.getItem('token');
+    
+    const query = {
+      query: `
+        query FindAllAuthors {
+            findAllAuthors {
+                id
+                name
+                email
+                telephone
+                status
+                age
+            }
+        }
+      `,
+    };
+
+    try {
+      const response = await axios.post(GRAPHQL_ENDPOINT, query, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // Attach token
+        },
+      });
+
+      console.log(response.data);
+    } catch (error) {
+      console.error('GraphQL query error:', error);
+    }
+  }
+
+  fetchData();
 
 </script>
 

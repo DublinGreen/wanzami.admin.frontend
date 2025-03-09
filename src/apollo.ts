@@ -6,7 +6,7 @@ import store from "./store";
 
 // 🔹 Authentication GraphQL Client
 const authHttpLink = createHttpLink({
-    uri: store.state.authBackendUrl
+    uri: store.state.noAuthBackendUrl
 });
 
 const authLink = setContext((_, { headers }) => {
