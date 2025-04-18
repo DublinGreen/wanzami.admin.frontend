@@ -1,12 +1,11 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core';
 import { setContext } from '@apollo/client/link/context';
-
-// Import Vue store if needed
-import store from "./store";
+// @ts-ignore
+import store from "@/store/index.js"
 
 // 🔹 Authentication GraphQL Client
 const authHttpLink = createHttpLink({
-    uri: store.state.noAuthBackendUrl
+    uri: store.state.tokenRequiredBackendUrl
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -24,15 +23,6 @@ const authApolloClient = new ApolloClient({
     cache: new InMemoryCache(),
 });
 
-// 🔹 Data Service GraphQL Client
-const dataHttpLink = createHttpLink({
-    uri: store.state.noAuthBackendUrl
-});
-
-const dataApolloClient = new ApolloClient({
-    link: dataHttpLink,
-    cache: new InMemoryCache(),
-});
-
-// Export both clients
-export { authApolloClient, dataApolloClient };
+export const apolloClients = {
+    default: authApolloClient,
+};

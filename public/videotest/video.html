@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HLS Video Streaming</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+    <h1>HLS Video Streaming</h1>
+    <video id="video" controls width="640" height="360" preload="metadata">
+      <track src="http://localhost/videotest/test.vtt" label="English" kind="captions" srclang="en-us" default="" /> 
+    </video>
+
+    <script>
+        const video = document.getElementById('video');
+        const videoSrc2 = 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8'; // Replace with your HLS stream URL
+        const videoSrc3 = 'http://localhost/videotest/output.m3u8#EXT-X-START:TIME-OFFSET=15'; // Replace with your HLS stream URL
+        const videoSrc = 'https://s3.eu-north-1.amazonaws.com/wanzami.tv.bucket/videos/test1/output.m3u8?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250407T151115Z&X-Amz-SignedHeaders=host&X-Amz-Expires=5400&X-Amz-Credential=AKIA45Y2R2BSITSOTVVO%2F20250407%2Feu-north-1%2Fs3%2Faws4_request&X-Amz-Signature=27314366c4b8ebe7c47a987d6cb18ecc53ba983ccffef61ced1ee4dce49ac887' + '#EXT-X-START:TIME-OFFSET=15'; // Replace with your HLS stream URL
+
+        if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            // Native HLS support (e.g., Safari)
+            video.src = videoSrc;
+        } else if (Hls.isSupported()) {
+            // HLS.js support for other browsers
+            const hls = new Hls();
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+        } else {
+            console.error('Your browser does not support HLS.');
+        }
+        
+        const track = video.textTracks[0]; // Get the first track
+        if (track) {
+          track.mode = 'showing'; // Ensure the captions are displayed
+        } else {
+          console.error('Track not found or not loaded.');
+        }
+    </script>
+</body>
+</html>

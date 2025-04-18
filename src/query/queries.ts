@@ -12,7 +12,43 @@ query FindAllUsers {
   }
 }`;
 
+export const GET_ALL_AUTHORS = gql`
+query FindAllAuthors {
+  findAllAuthors {
+      id
+      name
+      email
+      telephone
+      status
+      age
+  }
+}`;
 
-// import { useQuery } from '@vue/apollo-composable';
-// import {GET_ALL_USERS} from "@/query/GET_ALL_USERS";
-// useQuery(GET_ALL_USERS);
+export const GET_ALL_COUNTRIES = gql`
+query FindAllCountries {
+    findAllCountries {
+        id
+        name
+        status
+    }
+}`;
+
+export const GET_ALL_PROFILES = gql`
+query FindAllProfiles {
+    findAllProfiles {
+        id
+        status
+        name
+        avatar
+        user {
+            id
+            status
+            username
+            email
+            telephone
+            role
+        }
+    }
+}`;
+
+

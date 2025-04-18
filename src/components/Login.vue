@@ -29,7 +29,7 @@
                 type="warning"
                 prominent
               >
-                Invalid email and password combination.
+                Invalid combination or not an admin user.
               </v-alert>
               <br>  
               <form>
@@ -90,23 +90,19 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, ref } from 'vue'
+  import { ref } from 'vue'
   import { reactive } from 'vue'
-  import { ApolloClients } from '@vue/apollo-composable';
-  import apolloClient from '@/apollo';
-  import store from "@/store";
-  import gql from 'graphql-tag';
+  // @ts-ignore
+  import store from "@/store/index.js"
   import { useVuelidate } from '@vuelidate/core'
   import { email, required } from '@vuelidate/validators'
-  import { useMutation } from '@vue/apollo-composable';
-  import { useRouter } from 'vue-router';
-  import {LOGIN_USER} from "@/mutation/mutations";
-  import {onMounted } from 'vue';
-  import { inject } from 'vue';
-
-  const dataApolloClient = inject('apolloDataClient');
+  import { useRouter } from 'vue-router'
+  import {onMounted } from 'vue'
+  import axios from 'axios'
 
   const router = useRouter();
+
+  const GRAPHQL_ENDPOINT = store.state.noTokenRequiredBackendUrl;
 
   onMounted(async () => {
       if(localStorage.getItem('token')){
@@ -137,8 +133,6 @@
 
   const v$ = useVuelidate(rules, state)
 
-  const { mutate: loginUser } = useMutation(LOGIN_USER, { "client": dataApolloClient });
-
   function clear () {
     v$.value.$reset()
 
@@ -149,17 +143,44 @@
     loginWarning.value = false;
   }
 
+  async function loginUser(email: string, password: string) {
+      const mutation = `
+      mutation LoginAdmin($email: String!, $password: String!) {
+        loginAdmin(email: $email, password: $password)
+      }
+    `;
+
+    try {
+      const response = await axios.post(
+        GRAPHQL_ENDPOINT,
+        {
+          query: mutation,
+          variables: { email, password },
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("GraphQL Mutation Login Error:", error);
+    }
+  }
+
   async function submit () {
     loading.value = true;
     try {
-      const response = await loginUser({
-        email: state.email,
-        password: state.password,
-      });
 
-      if(response?.data){
+      const response = await loginUser(state.email, state.password);
+      
+      if(response?.data?.loginAdmin){
         clear();
-        store.dispatch('setToken', response.data.login);
+        store.dispatch('setToken', response.data.loginAdmin);
+        localStorage.setItem("token", response.data.loginAdmin);
+      }else{
+        loginWarning.value = true;
       }
 
       setTimeout(() => {
@@ -169,6 +190,7 @@
       }, store.state.redirectTimeout);
     } catch (error) {
       loginWarning.value = true;
+      console.log(error);
     } finally {
       loading.value = false;
     }

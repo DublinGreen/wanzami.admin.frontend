@@ -1,0 +1,102 @@
+WEBVTT - https://maestrasuite.com
+
+0
+00:00:00.180 --> 00:00:04.069
+The class library that's a
+part of the JDK includes a
+
+1
+00:00:04.080 --> 00:00:06.799
+rich set of classes designed
+for network communications.
+
+2
+00:00:07.880 --> 00:00:10.709
+Among the tasks that they
+support, they give you the
+
+3
+00:00:10.720 --> 00:00:13.659
+ability to easily retrieve
+and read files over the web.
+
+4
+00:00:14.140 --> 00:00:17.008
+I'll show you one approach to
+doing this using the classes
+
+5
+00:00:17.020 --> 00:00:18.419
+of the Java class library.
+
+6
+00:00:18.860 --> 00:00:21.668
+I'll mention before I get
+started that there are easier
+
+7
+00:00:21.680 --> 00:00:25.068
+ways that require less code
+if you use the Apache Commons
+
+8
+00:00:25.080 --> 00:00:27.989
+library, but it's good to
+know what's available in the
+
+9
+00:00:28.000 --> 00:00:29.419
+core class library first.
+
+10
+00:00:29.420 --> 00:00:32.509
+I'm working in a project
+called Network Files, and a
+
+11
+00:00:32.520 --> 00:00:35.629
+class called ReadNetworkFile,
+and I'm working with
+
+12
+00:00:35.640 --> 00:00:36.779
+an empty main method.
+
+13
+00:00:37.810 --> 00:00:40.219
+The first step in
+getting a network file
+
+14
+00:00:40.230 --> 00:00:41.469
+is knowing its location.
+
+15
+00:00:41.770 --> 00:00:44.559
+You should wrap the location
+in the file in an instance
+
+16
+00:00:44.570 --> 00:00:48.209
+of a class named URL, for
+Uniform Resource Locator.
+
+17
+00:00:48.750 --> 00:00:51.739
+I'll type in the name of the
+class, which is all uppercase,
+
+18
+00:00:51.750 --> 00:00:54.499
+and I'll press Control
+Space, and choose the version
+
+19
+00:00:54.510 --> 00:00:56.409
+in the package java.net.
+
+20
+00:00:57.520 --> 00:00:59.959
+I'll name that variable
+URL, all lowercase.
+

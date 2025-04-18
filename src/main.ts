@@ -6,8 +6,8 @@
 
 // Plugins
 import { registerPlugins } from '@/plugins'
-import { DefaultApolloClient, provideApolloClient } from '@vue/apollo-composable';
-import { authApolloClient, dataApolloClient } from './apollo';
+import { ApolloClients } from '@vue/apollo-composable';
+import { apolloClients } from './apollo';
 
 // Components
 import App from './App.vue'
@@ -18,8 +18,7 @@ import { createApp } from 'vue'
 import store from './store';
 const app = createApp(App).use(store)
 
-app.provide(DefaultApolloClient, authApolloClient);
-app.provide('apolloDataClient', dataApolloClient); // Custom key for second client
+app.provide(ApolloClients, apolloClients);
 
 registerPlugins(app)
 

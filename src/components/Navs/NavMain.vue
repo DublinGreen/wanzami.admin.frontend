@@ -8,30 +8,117 @@
               <i class="fa fa-home fa-4x iconlight"></i>
             </router-link>
           </v-list-item-action>
-          <v-list-item-content>
-            <router-link style="float: right; margin-top: -40px; margin-right: 100px;" class="leftNavText" to="/Dashboard">Home</router-link>
-          </v-list-item-content>
+          <!--<v-list-item-content>
+            <router-link style="float: right; margin-top: -40px; margin-right: 100px;" class="leftNavText" to="/Dashboard">Dashboard </router-link>
+          </v-list-item-content>-->
         </v-list-item>
         <v-list-item class="leftNavs">
-          <v-list-item-action>
-            <router-link to="/ManageUsers">
-              <i class="fa fa-user fa-4x iconlight"></i>
-            </router-link>
-          </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title class="leftNavText">
-              <router-link to="/ManageUsers">
-                Register
-                <br />Voter
+              <router-link to="/ManageAuthors">
+                Authors
               </router-link>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item class="leftNavs" v-show="isLogin">
+        <v-list-item class="leftNavs">
+          <v-list-item-content>
+            <v-list-item-title class="leftNavText">
+              <router-link to="/ManageCountries">
+                Countries
+              </router-link>
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item class="leftNavs">
           <v-list-item-action>
             <router-link to="/ManageUsers">
-              <i class="fa fa-users fa-4x iconlight"></i>
+            </router-link>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="leftNavText">
+              <router-link to="/ManageUsers">
+                Cast
+              </router-link>
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item class="leftNavs">
+          <v-list-item-action>
+            <router-link to="/ManageUsers">
+            </router-link>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="leftNavText">
+              <router-link to="/ManageUsers">
+                Category
+              </router-link>
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item class="leftNavs">
+          <v-list-item-action>
+            <router-link to="/ManageUsers">
+            </router-link>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="leftNavText">
+              <router-link to="/ManageUsers">
+                Country
+              </router-link>
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item class="leftNavs">
+          <v-list-item-action>
+            <router-link to="/ManageUsers">
+            </router-link>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="leftNavText">
+              <router-link to="/ManageUsers">
+                Permission
+              </router-link>
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item class="leftNavs">
+          <v-list-item-action>
+            <router-link to="/ManageProfiles">
+            </router-link>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="leftNavText">
+              <router-link to="/ManageProfiles">
+                Profile
+              </router-link>
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item class="leftNavs">
+          <v-list-item-action>
+            <router-link to="/ManageUsers">
+            </router-link>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="leftNavText">
+              <router-link to="/ManageUsers">
+                Rating
+              </router-link>
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item class="leftNavs">
+          <v-list-item-action>
+            <router-link to="/ManageUsers">
             </router-link>
           </v-list-item-action>
           <v-list-item-content>
@@ -43,28 +130,44 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item class="leftNavs" v-show="isLoginAsVoter">
+        <v-list-item class="leftNavs">
           <v-list-item-action>
-            <router-link to="/Elections">
-              <i class="fas fa-box-open fa-4x iconlight"></i>
+            <router-link to="/ManageUsers">
             </router-link>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title class="leftNavText">
-              <router-link to="/Elections">Elections</router-link>
+              <router-link to="/ManageUsers">
+                Video
+              </router-link>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
         <v-list-item class="leftNavs">
           <v-list-item-action>
-            <router-link to="/Reports">
-              <i class="fas fa-chart-bar fa-4x iconlight"></i>
+            <router-link to="/ManageUsers">
             </router-link>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title class="leftNavText">
-              <router-link to="/Reports">Reports</router-link>
+              <router-link to="/ManageUsers">
+                Video Cat
+              </router-link>
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item class="leftNavs">
+          <v-list-item-action>
+            <router-link to="/ManageUsers">
+            </router-link>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="leftNavText">
+              <router-link to="/ManageUsers">
+                Video Meta
+              </router-link>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -73,10 +176,6 @@
           <v-list-item-action>
             <i class="fa fa-power-off fa-4x iconlight"></i>
           </v-list-item-action>
-
-          <v-list-item-content>
-            <p id="leftNavLogout">Logout</p>
-          </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -91,14 +190,15 @@
 <script setup lang="ts">
   import { ref } from 'vue'
   import { reactive } from 'vue'
-  import store from "@/store";
-  import gql from 'graphql-tag';
-  import { useMutation } from '@vue/apollo-composable';
-  import { useRouter } from 'vue-router';
-  import {LOGOUT_USER} from "@/mutation/mutations";
-  import {onMounted } from 'vue';
+  // @ts-ignore
+  import store from "@/store/index.js"
+  import { useRouter } from 'vue-router'
+  import {onMounted } from 'vue'
+  import axios from 'axios'
 
   const router = useRouter();
+
+  const GRAPHQL_ENDPOINT = store.state.noTokenRequiredBackendUrl;
 
   onMounted(async () => {
       if(localStorage.getItem('token') == ""){
@@ -123,30 +223,54 @@
     ...initialState,
   })
 
-  const { mutate: logoutUser } = useMutation(LOGOUT_USER, {
-    clientId: "defaultAlt", // Ensure you're using the correct client
-  });
+  async function logoutRequest(token: string) {
+    const mutation = `
+      mutation Logout($token: String!) {
+          logout(token: $token)
+      }
+    `;
 
+    try {
+      const response = await axios.post(
+        GRAPHQL_ENDPOINT,
+        {
+          query: mutation,
+          variables: { token },
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          },
+        }
+      );
+      return response.data;
+      console.log(response);
+    } catch (error) {
+      console.error("GraphQL Mutation Logout Error:", error);
+    }
+  }
 
   async function logout () {
     if (confirm("Are you sure you want to logout?")) {
 
       try {
-        const response = await logoutUser({
-          token: localStorage.getItem("token")
-        });
-        console.log(response);
+        const token = localStorage.getItem("token") ?? '';
+        const response = await logoutRequest(token);
+        
+        if(response?.data.logout){
+          localStorage.setItem("token", "");
+        }
 
       } catch (error) {
-        // loginWarning.value = true;
         console.log(error);
       } finally {
-        // loading.value = false;
-      }
+        
+        store.dispatch('setToken', "");
+        localStorage.setItem("token", "");
 
-      localStorage.setItem("token", "");
-      if(redirect.value){
+        if(redirect.value){
           router.push('/');
+        }
       }
     }
   }
@@ -174,6 +298,16 @@ nav {
 .leftNavs:hover {
   box-shadow: 5px 5px 5px #333333;
   border: 1px dotted #ffffff;
+}
+
+.leftNavText{
+  font-size: 2em;
+  font-weight: bolder;
+  color: #fff;
+}
+
+.leftNavText:hover {
+  color: #ffff00;
 }
 
 .iconlight {

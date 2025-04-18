@@ -3,8 +3,8 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     token            :  null,
-    noAuthBackendUrl : "http://localhost:9085/graphql",
-    authBackendUrl   : "http://localhost:8081/graphql",
+    noTokenRequiredBackendUrl : "http://localhost:9085/graphql",
+    tokenRequiredBackendUrl   : "http://localhost:8081/graphql",
     redirectTimeout  : 2000,
     appName          : "Wanzami",
     count            : 1500,

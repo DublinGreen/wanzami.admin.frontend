@@ -36,7 +36,7 @@
 <script>
 import axios from "axios";
 import { profileMixin } from "../mixins/profileMixin.js";
-import store from "../store";
+import store from "../store/index.js";
 import NavMain from "../components/Navs/NavMain.vue";
 import Footer from "../components/Footers/Footer.vue";
 
